@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/login_register_style.css' %}" />
+
+	</head>
+
+	<body>
+		
+
+		{% include 'app/header.html' %}
+
+
+<!-- login form ---------------------------------->
+
+		<section class="account_form">
+
+			<form method="POST" action="">
+				{% csrf_token %}
+				<h1>LOGIN</h1>
+				<p>
+					<input type="text" name="username" placeholder="User Name" required /> <br />
+					<input type="password" name="password" placeholder="Password" required /> <br />
+					<a href="{% url 'reset_password' %}">Forgot password ?</a> <br />
+					<input type="submit" value="login" />
+				</p>
+				<p>Dont have an account?<a href="{% url 'register' %}">Register</a></p>
+
+				{% for message in messages %}
+					<div style="color:rgb(40, 40, 40);">{{message}}</div>
+				{% endfor %}
+			</form>
+
+		</section>
+
+		{% include 'app/footer.html' %}
+
+	</body>
+</html>

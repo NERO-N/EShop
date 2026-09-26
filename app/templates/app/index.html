@@ -1,0 +1,180 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product_list_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+		<script  type="text/javascript" src="{% static 'js/header_script.js' %}" defer></script>
+		<script  type="text/javascript" src="{% static 'js/script.js' %}" defer></script>
+
+		<noscript>
+			<link rel="stylesheet" type="text/css" href="{% static 'css/noscript_style.css' %}" />
+		</noscript>
+
+	</head>
+
+	<body>
+
+		{% if info_ribbon is not None %}
+		<div id="info_ribbon"> {{info_ribbon.content}} </div>
+		{% endif %}
+
+		{% include 'app/header.html' %}
+
+		<div class="hero">
+
+            <div class="slider">
+				<input type="radio" name="hero_image" id="first_image"  />
+				<input type="radio" name="hero_image" id="second_image" />
+				<input type="radio" name="hero_image" id="third_image" />
+				<input type="radio" name="hero_image" id="fourth_image" />
+
+			    <div class="slides">
+					<div >
+						<img src="{% static 'images/nike-5128119_1920modified.jpg' %}" alt="hero image" />
+					</div>
+					<div>
+						<img src="{% static 'images/adidas-5400468_1920modified.jpg' %}" alt="hero image" />
+					</div>
+					<div>
+						<img src="{% static 'images/kicks-2213619_1920 modified.jpg' %}" alt="hero image" />
+					</div>
+					<div >
+						<img src="{% static 'images/nike-5126389_1920modified2.jpg' %}" alt="hero image" />
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<aside>
+					<div>
+						<a href="#"> <img src="{% static 'images/facebook.svg' %}" alt="facebook icon" /> </a>
+					</div>
+					<div>
+						<a href="#"> <img src="{% static 'images/instagram.svg' %}" alt="instagram icon" /> </a>
+					</div>
+				</aside>
+
+				<div class="slogan">
+					<div class="ilust"></div>
+					<p>Get READY for any <br />occasion </p>
+					<div><a href="{% url 'collection' 'products' %}">Shop Now</a></div>
+					<div>shop now</div>
+				</div>
+
+				<div class="slider_buttons">
+					<label for="first_image"></label>
+					<label for="second_image"></label>
+					<label for="third_image"></label>
+					<label for="fourth_image"></label>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<section class="popular_right_now product_list">
+			<h1>Popular Right Now</h1>
+			
+			<div>
+				{% for product in popular_products %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>
+
+		</section>
+
+
+
+		<section class="categorie">
+			<div class="back_shadow toReveal"></div>
+			<div class="left_side">
+				<figure>
+					<img src="{% static 'images/shoes-3780166_1920.jpg' %}" alt="" />
+					<div><a href="{% url 'collection' 'man' %}">for Men</a></div>
+				</figure>
+				<figure>
+					<img src="{% static 'images/adidas-g52530412c_1920.jpg' %}" alt="" />
+					<div><a href="{% url 'collection' 'adidas' %}">adidas</a></div>
+				</figure>
+			</div class>
+			<div class="right_side">
+				<figure>
+					<img src="{% static 'images/person-731281_1920.jpg' %}" alt="" />
+					<div><a href="{% url 'collection' 'woman' %}">for</a> <br /> <a href="{% url 'collection' 'woman' %}">Women</a></div>
+				</figure>
+				<figure>
+					<img src="{% static 'images/nike-5041717_1920.jpg' %}" alt="" />
+					<div><a href="{% url 'collection' 'nike' %}">NIKE</a></div>
+				</figure>
+				<figure>
+					<img src="{% static 'images/walking-boots-gee7b20908_1920.jpg' %}" alt="" />
+					<div><a href="{% url 'collection' 'godass' %}">Godass</a></div>
+				</figure>
+			</div>
+		</section>
+
+
+
+		<section class="new_arrivals product_list toReveal">
+			<h1>NEW ARRIVALS <a href="{% url 'collection' 'new' %}">view all</a></h1>
+			
+			<div>
+				{% for product in new_arivalls %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>	
+
+		</section>
+
+
+
+		<section class="season product_list toReveal">
+			<h1> SEASON <a href="{% url 'collection' 'season' %}">view all</a></h1>
+
+			<div>
+				{% for product in season %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>
+
+		</section>
+
+
+
+		<section class="style product_list toReveal">
+			<h1>STYLE <a href="{% url 'collection' 'style' %}">view all</a> </h1>
+
+			<div>
+				{% for product in style %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>
+
+		</section>
+
+
+
+		<section class="sign_up">
+			<div class="main toReveal"></div>
+			<div class="toReveal">
+				<div class="sign_button"><a href="{% url 'login' %}">Sign up</a></div>
+			    <div>Sign up</div>
+			</div>
+		</section>
+
+
+		{% include 'app/footer.html' %}
+
+
+	</body>
+</html>

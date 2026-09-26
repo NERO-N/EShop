@@ -1,0 +1,19 @@
+Dear {{request.user.customer}} ;
+Thank you for purchasing our product. Your support and trust in us are much appreciated. 
+
+Delivery details :
+
+	Email: {{shipping.email}}
+	Payment Methode: {{shipping.payment_method}}
+	DELIVERY : {{DELIVERY_COST}} DA
+	TOTAL : {{total_cost}} DA
+				
+Your order summary:
+	{% for item in items %} 
+	{{item.size}}   x{{item.quantity}}  {{item.total_cost}} DA 
+	{% endfor %}
+
+				
+																					ClickShop. 
+																					{{shipping.date_created}}
+				

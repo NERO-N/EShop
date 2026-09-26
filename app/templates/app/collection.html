@@ -1,0 +1,232 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>Shoes for your daily needs | ClickShop</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product_list_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/collection_style.css' %}" />
+
+		<script  type="text/javascript" src="{% static 'js/header_script.js' %}" defer></script>
+
+	</head>
+
+	<body>
+		
+		{% include 'app/header.html' %}
+
+
+    	<p class="back_link">
+    		<a href="{% url 'home' %}">Home /</a>
+    		<a href="{% url 'collection' 'products' %}">collection /</a>
+    		<a href="#" > {{root}} /</a>
+    	</p>
+
+		<div class="hero">
+			<img src="{% static 'images/collectionBanner.svg' %}" alt="hero image" />
+		</div>
+
+
+
+
+		<section>
+			<div class="filter_header" id="filter_header">
+			    <h1> Filter <img src="{% static 'images/filter.svg' %}" alt="filter" /> </h1>
+			    <div>
+			    	<form method="GET" action="#filter_header">
+			    		{% csrf_token %}
+			    		<fieldset>
+							<label for="sort"> Sort by :</label>
+							<select name="sort" id="sort">
+								<option value="newest" >Newly listed</option>
+								<option value="price low to high">Price:lowest first</option>
+								<option value="price high to low">Price:highest first</option>
+								<option value="popular">Most Popular</option>
+							</select>
+							<input type="submit" value="Filter" />
+						</fieldset>
+				</div>
+		    </div>
+
+
+			<aside>
+				<fieldset>
+					{% if root != "man" and root != "woman" %}
+					<div class="gender">
+						<h2>Gender</h2>
+
+						<table>
+							<tr>
+								<td>
+									<input type="radio" name="gender" id="man" value="man" />
+									<label for="man">Man</label>
+								</td>
+								<td>
+									<input type="radio" name="gender" id="woman" value="woman" />
+									<label for="woman">Woman</label>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+					{% endif %}
+
+					<div class="size">
+						<h2>Size</h2>
+
+						<table>
+							<tr>
+								<td>
+									<input type="radio" name="size" id="36" value="36" />
+									<label for="36">36</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="37" value="37" />
+									<label for="37">37</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="38" value="38" />
+									<label for="38">38</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="39" value="39" />
+									<label for="39">39</label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="radio" name="size" id="40" value="40" />
+									<label for="40">40</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="41" value="41" />
+									<label for="41">41</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="42" value="42" />
+									<label for="42">42</label>
+								</td>
+								<td>
+									<input type="radio" name="size" id="43" value="43" />
+									<label for="43">43</label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="radio" name="size" id="44" value="44" />
+									<label for="44">44</label>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="price">
+						<h2>Price</h2>
+
+						<table>
+							<tr>
+								<td>
+									<label for="min_price">min_price</label>
+								</td>
+								<td>
+									<input type="number" name="min_price" id="min_price" step="10" min="0" max="40000"/>
+								</td> 
+							</tr>
+							<tr>
+								<td>
+									<label for="max_price">max_price</label>
+								</td>
+								<td>
+									<input type="number" name="max_price" id="max_price" step="10" min="0" max="40000" />
+								</td>
+							</tr> 
+						</table>
+
+					</div>
+
+					<div class="color">
+						<h2>Color</h2> 
+
+						<input type="radio" name="color" id="black" value="black" />
+						<label for="black"></label> 
+						<input type="radio" name="color" id="white" value="white" />
+						<label for="white"></label>
+						<input type="radio" name="color" id="gray" value="gray"  />
+						<label for="gray"></label> 
+						<input type="radio" name="color" id="red" value="red" />
+						<label for="red"></label>
+						<input type="radio" name="color" id="blue" value="blue" />
+						<label for="blue"></label> 
+							
+					</div>
+
+					{% if root != "nike" and root != "adidas" and root != "godass" %}
+					<div class="brand">
+						<h2>Brand</h2> 
+						
+						<select name="brand">
+							<option value="none" >------</option>
+							<option value="adidas" >adidas</option>
+							<option value="nike">nike</option>
+							<option value="converse">converse</option>
+							<option value="puma">puma</option>
+							<option value="godass">godass</option>
+						</select>
+					</div>
+					{% endif %}
+
+				</fieldset>
+				</form>  
+
+			</aside>
+
+
+
+			<div class="container product_list">
+
+				{% for color in page %}
+				<figure>
+					<div class="img_container">
+						<img src="{{ color.main_image_URL }}" alt="" />
+						<div class="view">
+							<div class="view_button">
+								<a href="{% url 'view' color.id %}">View</a>
+							</div>
+						</div>
+					</div>
+					<figcaption>
+						<div class="add_to_bag">
+							<a href="{% url 'view' color.id %}"></a>
+						</div>
+						<p>{{color.product}}</p>
+						{% if color.product.final_price != color.product.price %}
+						<p><span style="text-decoration:line-through; color:silver;">{{color.product.price}} DA</span>  {{color.product.final_price}} DA </p>
+						{% else %}
+						<p>{{color.product.final_price}} DA </p>
+						{% endif %}
+						<p>colors {{color.product.colors}}</p>
+					</figcaption>
+				</figure>
+				{% endfor %}
+			</div>
+
+			<div class="pagination">
+				{% if page.has_previous %}
+				<a href="{% url 'collection' 'products' %}?page={{page.previous_page_number}}#filter_header"> Previous </a>
+				{% endif %}
+
+				{% if page.has_next %}
+				<a href="{% url 'collection' 'products' %}?page={{page.next_page_number}}#filter_header"> Next </a>
+				{% endif %}
+			</div>
+		</section>
+
+		{% include 'app/footer.html' %}
+
+	</body>
+</html>

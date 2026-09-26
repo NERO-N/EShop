@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/login_register_style.css' %}" />
+	</head>
+
+	<body>
+		
+		{% include 'app/header.html' %}
+
+<!-- register form ----------------------------------->
+
+		<section class="account_form register_form">
+
+			<form method="POST" action="">
+				{% csrf_token %}
+				<h1>CREATE ACCOUNT</h1>
+				<p> 	
+					<input type="text" name="username" placeholder="User Name" maxlength="150" autofocus required /> <br />
+					<input type="email" name="email" placeholder="Email" maxlength="254" required /> <br />
+					<input type="password" name="password1" placeholder="Password" autocomplete="new-password" required /> <br />
+					<input type="password" name="password2" placeholder="Confirm Password" autocomplete="new-password" required /> <br />
+					<input type="submit" value="Create Account" />
+				</p>
+				<p>Already have account?<a href="{%  url 'login' %}">Login</a></p>
+				{{form.errors}}
+			</form>
+
+		</section>
+
+
+
+		{% include 'app/footer.html' %}
+
+	</body>
+</html>

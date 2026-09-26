@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/checkout_style.css' %}" />
+
+	</head>
+
+	<body>
+		<header>
+			<div>
+				<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo ClickShop" /></a>
+			</div>
+		</header>
+
+		<p class="back_link"><a href="{% url 'collection' 'product' %}"> &larr; back to shopping</a></p>
+
+
+<!-- form section --------------------------------------------->
+
+		<section>
+			<form method="POST" action="">
+				{% csrf_token %}
+				<fieldset>
+					<legend>SHIPPING ADDRESS</legend>
+					<input type="text" name="first_name" placeholder="First Name *"  maxlength="20" required /> 
+					<input type="text" name="last_name" placeholder="Last Name *"  maxlength="20" required /> 
+					<input type="text" name="address" placeholder="Delivery Address *"  maxlength="80" required />
+					<input type="text" name="wilaya" placeholder="Wilaya *"  maxlength="30" required />
+				</fieldset>
+
+				<fieldset>
+					<legend>CONTACT DETAILS</legend>
+					<p>We'll use these details to keep you informed on your <br />delivery.</p>
+					<input type="tel" name="phone" placeholder="Phone Number *"  maxlength="15" required /> <br>
+					<input type="email" name="email" placeholder="Email"  maxlength="80" />
+				</fieldset>
+
+				<fieldset>
+					<legend>Payment Method</legend>
+					<select name="payment_method" required >
+						<option value="hand to hand">Hand to Hand</option>
+					</select>
+				</fieldset>
+
+				<div class="frame">Confirm</div>
+				<input type="submit" name="submit" value="Confirm" />
+
+				
+				<p style="border-top: 1px solid black;"> {{form.errors}} </p>
+
+			</form>
+			<aside>
+				<div class="order_summary">
+	    				<h1>Order summary</h1>
+
+	    				{% for item in items %}
+	    				<div class="element">
+	    					<div>
+	    						<img src="{{ item.size.color.main_image_URL }}" alt="product image" />
+	    					</div>
+	    					<div>
+	    						<p>{{item.size}} <br />x{{item.quantity}}</p>
+	    						<p>{{item.total_cost}} DA </p> 
+	    					</div>
+	    				</div>
+	    				{% endfor %}
+
+	    				<div>
+	    					{% if order.total_items > 1 %}
+	    					<p>
+	    						{{order.total_items}} ITEMS <br /> <br />  DELIVERY
+	    					</p>
+	    					{% else %}
+	    					<p>
+	    						{{order.total_items}} ITEM <br /> <br />  DELIVERY
+	    					</p>
+	    					{% endif%}
+	    					<p>
+	    						{{order.total_cost}} DA <br /> <br /> {{DELIVERY_COST}} DA 
+	    					</p>
+	    				</div>
+	    				<div class="total">
+	    					<p>TOTAL : {{total_cost}} DA</p>
+	    				</div>
+	    		</div>
+	    			
+			</aside>
+
+		</section>
+	</body>
+</html>

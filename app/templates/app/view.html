@@ -1,0 +1,177 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop | {{product.name}}</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product_list_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/view_style.css' %}" />
+
+		<script  type="text/javascript" src="{% static 'js/header_script.js' %}" defer></script>
+		<script  type="text/javascript" src="{% static 'js/view_script.js' %}" defer></script>
+		
+	</head>
+
+	<body>
+		
+		{% include 'app/header.html' %}
+
+		<p class="back_link"><a href="{% url 'collection' 'products' %}"> &larr; back to shopping</a></p>
+
+
+		<section class="product">
+			<div class="overview">
+				<div class="main_view">
+					<img id="featured" src="{{ color.main_image_URL }}" alt="product view" />
+				</div>
+				<div class="views">
+					{% for image in images %}
+					<div><img class="image" src="{{ image.image_URL }}" alt="product view" /></div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<aside>
+				<form method="POST" action="{% url 'bag' %}">
+					{% csrf_token %}
+					<div class="name">
+						<p>{{color}}</p>
+						{% if product.price != product.final_price %}
+						<p><span style="text-decoration:line-through; color:silver;">{{product.price}} DA</span>  {{product.final_price}} DA </p>
+						{% else %}
+						<p>{{product.final_price}} DA </p>
+						{% endif %}
+						<input type="text" name="product" value="{{product.name}}" readonly required />
+					</div>
+
+					<div class="color">
+						<h2>Color :</h2> 
+
+						{% for related_color in related_colors%}
+
+						{% if related_color == color %}
+						<input type="radio" name="color" id="{{related_color.name}}" value="{{related_color.name}}" checked  />
+
+						<label for="{{related_color.name}}"> <a href="{% url 'view' related_color.id %}"> <img src="{{ related_color.main_image_URL }}" alt="product image" /> </a> </label>
+						{% else %}
+						<input type="radio" name="color" id="{{related_color.name}}" value="{{related_color.name}}" />
+
+						<label for="{{related_color.name}}"> <a href="{% url 'view' related_color.id %}"> <img src="{{ related_color.main_image_URL }}" alt="product image" /> </a> </label> 
+						{% endif %}
+
+						{% endfor %}
+
+					</div>
+
+					<div class="size">
+						<h2>Size :</h2>
+
+						{% if not out_of_stock %}
+
+						{% for size in sizes %}
+						{% if size.quantity > 0 %}
+						<input type="radio" name="size" id="{{size.name}}" value="{{size.name}}"  required />
+						<label for="{{size.name}}">{{size.name}}</label>
+						{% else %}
+						<input type="radio" name="size" id="{{size.name}}" value="{{size.name}}"  disabled />
+						<label for="{{size.name}}" style="background: silver;color: white" >{{size.name}}</label>
+						{% endif %}
+						{% endfor %}
+
+						{% else %}
+						<p style="background:red ;padding:5px; text-align:center ;border-radius:7px;">
+						 	OUT OF STOCK
+						</p>
+						{% endif %}
+						
+
+					</div>
+
+					<div class="buttons">
+						<input type="number" name="quantity" max="9" min="0" placeholder="0" required />
+						<input type="submit" value="Add to Cart" />
+						<div><a href="{% url 'bag' %}"> Checkout </a></div>
+					</div>
+
+				</form>
+
+			</aside>	
+		</section>
+
+
+		<section class="description">
+			<h1>PRODUCT DETAILS</h1>
+			<div>
+				<p>
+					{{product.description}}
+				</p>
+			</div>
+		</section>
+
+		
+		<section class="review" id="reviews">
+			<h1>REVIEWS</h1>
+
+			{% for review in reviews %}
+
+			<div>
+				{% if review.customer is not None %}
+				<h2>{{review.customer.name}}</h2>
+				{% else %}
+				<h2 style="color:silver;">User</h2>
+				{% endif %}
+				<p>{{review.content}}</p>
+				<p style="color: gray;">{{review.date_edited.date}}</p>
+
+				{% if request.user.is_authenticated and request.user.customer == review.customer %}
+				<div>
+					<button> <a href="{% url 'edit' review.id %}"> edit </a> </button>
+					<button> <a href="{% url 'delete' review.id %}"> delete </a> </button>
+				</div>
+				{% endif %}
+
+			</div>
+			
+			{% endfor %}
+			
+
+			<!--<div class="more_reviews">
+				<a href="{% url 'view' color.id %}?displayed={{total_reviews}}"> More Reviews </a>
+			</div>-->
+			<div>
+				<form method="POST" action="#reviews">
+				{% csrf_token %}
+				{{form.content}}
+				<input type="submit" value="Add Review" />
+				</form>
+			</div>
+
+			{% for message in messages %}
+			<div style="text-align: center;padding: 3px;background:red;" >{{message}}</div>
+			{% endfor %}
+		</section>
+
+
+
+
+		<section class="related product_list">
+			<h1>RELATED</h1>
+			<div>
+				{% for product in related_products %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>
+		</section>
+
+
+
+
+		{% include 'app/footer.html' %}
+
+	</body>
+</html>

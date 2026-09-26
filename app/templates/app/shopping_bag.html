@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>ClickShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/header_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product_list_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/shopping_bag_style.css' %}" />
+
+		<script  type="text/javascript" src="{% static 'js/header_script.js' %}" defer></script>
+		<script  type="text/javascript" src="{% static 'js/shopping_bag_script.js' %}" defer></script>
+
+		
+	</head>
+
+	<body>
+		
+
+		{% include 'app/header.html' %}
+ 
+
+    	<p class="back_link"><a href="{% url 'collection' 'product' %}"> &larr; back to shopping</a></p>
+	
+
+<!--bag section ------------------------------------------------------>
+
+    	<section class="bag_overview">
+    		<h1>YOUR BAG</h1>
+
+    		<div class="overview_wrapper">
+	    		<div class="bag_side">
+
+	    			<div class="total">
+	    				{% if order.total_items > 1 %}
+	    				<p>{{order.total_items}} ITEMS</p>
+	    				{% else %}
+	    				<p>{{order.total_items}} ITEM</p>
+	    				{% endif%}
+	    				<p>TOTAL : {{order.total_cost}} DA</p>
+	    			</div>
+
+	    			<div class="bag_contant">
+	    				{% if order.total_items == 0 %}
+	    				<p style="text-align: center;">your bag is empty</p>
+	    				{% endif %}
+
+	    				{% for item in items %}
+	    				<div class="element">
+	    					<div>
+	    						<img src="{{ item.size.color.main_image_URL }}" alt="product image" />
+	    					</div>
+	    					<p>
+	    						{{item.size.color.product}} <br />
+	    						{{item.size.color.name}} {{item.size.name}} <br />
+
+	    						{% if item.size.color.product.final_price != item.size.color.product.price %}
+
+								<span style="text-decoration:line-through; color:silver;">{{item.size.color.product.price}} DA</span>  {{item.size.color.product.final_price}} DA
+
+								{% else %}
+								{{item.size.color.product.final_price}} DA
+
+								{% endif %}
+
+	    					</p>
+	    					<div >
+	    						 {{item.quantity}} 
+					
+								<a href="{% url 'add' item.id %}" class="update_button"> <img src="{% static 'images/up.svg' %}" alt="up icon" /> </a>
+								<a href="{% url 'sub' item.id %}" class="update_button"> <img src="{% static 'images/down.svg' %}" alt="down icon" /> </a>
+
+
+	    					</div>
+	    				</div>
+	    				{% endfor %}
+
+	    			</div>
+
+	    			{% for message in messages%}
+	    			<p style="text-align:center;">{{ message }}</p>
+	    			{% endfor %}
+
+	    		</div>
+
+	    		<div class="proceed_side">
+	    			<div class="order_summary">
+	    				<h1>Order summary</h1>
+	    				<div>
+	    					{% if order.total_items > 1 %}
+	    					<p>
+	    						{{order.total_items}} ITEMS <br /> <br />  DELIVERY
+	    					</p>
+	    					{% else %}
+	    					<p>
+	    						{{order.total_items}} ITEM <br /> <br />  DELIVERY
+	    					</p>
+	    					{% endif %}
+	    					<p>
+	    						{{order.total_cost}} DA <br /> <br />  {{DELIVERY_COST}} DA  
+	    					</p>
+	    				</div>
+	    				<div>
+	    					<p>TOTAL : {{total_cost}} DA</p>
+	    				</div>
+	    			</div>
+
+	    			<div class="frame"> CHECKOUT </div>
+
+	    			{% if order.total_items > 0 %} 
+	    			<a href="{% url 'checkout' %}">
+		    			<div class="checkout"> CHECKOUT </div>
+	    			</a>
+	    			{% else %}
+	    				<div class="checkout" style="cursor: pointer;"> CHECKOUT </div>
+	    			{% endif%}
+
+	    		</div>
+	    	</div>
+    	</section>
+
+
+<!--sugestion and picks section-------------------------------------->
+		
+
+		<section class="suggestion product_list">
+			<h1>TOP PICK FOR YOU</h1>
+			<div>
+				{% for product in pick_for_you_products %}
+					{% include 'app/product_figure.html' %}
+				{% endfor %}
+			</div>
+		</section>
+
+			
+
+		{% include 'app/footer.html' %}
+
+	</body>
+</html>
