@@ -1,0 +1,102 @@
+
+
+/* form ****************************************************/
+
+.account_form {
+	background: silver;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 600px;
+}
+
+.register_form{
+	height: 750px;
+}
+
+.account_form form{
+	width: 40%;
+	height: 500px;
+	background: white;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.register_form form{
+	height: 600px;
+}
+
+.account_form h1{
+	margin: 40px;
+	font-size: 2em;
+	color: gray;
+
+}
+
+.account_form input{
+	width: 50%;
+	padding: 10px;
+	margin: 10px;
+	font-size: 1em;
+}
+
+
+.account_form a{
+	font-size: 0.8em;
+	color: silver;
+}
+
+.account_form input:last-child{
+	margin-top: 40px;
+	background: silver;
+	color: white;
+	border: 1px solid silver;
+	border-radius: 3px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.account_form input:last-child:hover{
+	box-shadow: 0px 0px 5px silver;
+	transition: 0.5s;
+}
+
+.account_form p+p{
+	font-size: 0.8em;
+}
+
+.account_form p+p a{
+	color: blue;
+	text-decoration: underline;
+	font-size: 0.9em;
+}
+
+.account_form ul{
+
+	padding: 0px;
+	margin: 0px;
+
+}
+
+
+
+/*******************************/ /******************************************/ /************************/
+/*responsive rules *************/
+
+@media screen and (max-width: 950px ){
+	.account_form form{
+		width: 70%;
+	}
+} 
+
+@media screen and (min-height: 720px){
+	.account_form{
+		height: 100vh;
+		align-items: flex-start;
+	}
+
+	.account_form form{
+		margin-top: 150px;
+	}
+
+}
