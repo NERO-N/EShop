@@ -1,0 +1,32 @@
+
+section{
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+form{
+	width: 50%;
+	text-align: center;
+}
+
+form textarea{
+	width: 100%;
+	height: 200px;
+}
+
+form input ,form a{
+	display: inline-block;
+	padding: 5px 10px;
+	margin: 10px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background: silver;
+	font-size: 1em;
+	color: rgb(40, 40, 40);
+	cursor: pointer;
+}
+
+

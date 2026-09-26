@@ -1,0 +1,22 @@
+/*Categorie section ***************************************************/
+.back_shadow{             
+	top: -50px;
+	right: -50px;
+}
+
+
+/*last  sections ****************************************/
+.new_arrivals, .season, .style {
+	opacity: 1;
+	transform: translate(0px);
+}
+
+/*sign up section *****************************************/
+.sign_up .main{
+	box-shadow: none;
+}
+
+.main+div{
+	top: 150px;
+   	right: 90px;
+}
