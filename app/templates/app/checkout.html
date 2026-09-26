@@ -1,0 +1,148 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+		<title>VipShop Online Shopping Dz</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=5, viewport-fit=cover" />
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/footer_style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/checkout_style.css' %}" />
+
+		<script type="text/javascript" src="{% static 'js/checkout_script.js' %}" defer></script>
+		<noscript>
+			<style>
+				section{
+					display: none;
+				}
+			</style>
+		</noscript>
+
+	</head>
+
+	<body>
+		<header>
+			<div>
+				<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo ClickShop" /></a>
+			</div>
+		</header>
+
+		<p class="back_link"><a href="{% url 'home' %}#products"> &larr; back to shopping</a></p>
+
+
+<!-- form section --------------------------------------------->
+
+		<section>
+			<form method="POST" action="">
+				{% csrf_token %}
+				<fieldset>
+					<legend>  الرجاء ملء استمارة المعلومات    </legend>
+					<input type="text" name="item" value="{{item.id}}" readonly  required />
+					<input type="text" name="first_name" placeholder="اللقب*  "  maxlength="20" required /> 
+					<input type="text" name="last_name" placeholder="الأسم*  "  maxlength="20" required /> 
+					<select name="wilaya" required >
+						<option value="" selected disabled hidden > الولاية* </option>
+						<option value="Adrar"> Adrar </option>
+						<option value="Chlef"> Chlef </option>
+						<option value="Laghouat"> Laghouat </option>
+						<option value="Oum El Bouaghi"> Oum El Bouaghi </option>
+						<option value="Batna"> Batna </option>
+						<option value="Bejaia"> Bejaia </option>
+						<option value="Biskra"> Biskra </option>
+						<option value="Bechar"> Bechar </option>
+						<option value="Blida"> Blida </option>
+						<option value="Bouira"> Bouira </option>
+						<option value="Tebessa"> Tebessa </option>
+						<option value="Tlemcen"> Tlemcen </option>
+						<option value="Tiaret"> Tiaret </option>
+						<option value="Tizi Ouzou"> Tizi Ouzou </option>
+						<option value="Alger"> Alger </option>
+						<option value="Djelfa"> Djelfa </option>
+						<option value="Jijel"> Jijel </option>
+						<option value="Setif"> Setif </option>
+						<option value="Saida"> Saida </option>
+						<option value="Skikda"> Skikda</option>
+						<option value="Sidi Bel-Abbes"> Sidi Bel-Abbes </option>
+						<option value="Annaba"> Annaba </option>
+						<option value="Geulma"> Geulma </option>
+						<option value="Constantine"> Constantine </option>
+						<option value="Medea"> Medea </option>
+						<option value="Mostganem"> Mostganem </option>
+						<option value="M'sila"> M'sila </option>
+						<option value="Mascara"> Mascara </option>
+						<option value="Ourgla"> Ourgla </option>
+						<option value="Oran"> Oran </option>
+						<option value="El bayadh"> El bayadh </option>
+						<option value="Bordj-BouArreridj"> Bordj-BouArreridj </option>
+						<option value="Boumerdes"> Boumerdes </option>
+						<option value="El-Taref"> El-Taref </option>
+						<option value="Tissemsilt"> Tissemsilt </option>
+						<option value="El-Oued"> El-Oued </option>
+						<option value="Khenchela"> Khenchela </option>
+						<option value="Souk-Ahras"> Souk-Ahras </option>
+						<option value="Tipaza"> Tipaza </option>
+						<option value="Mila"> Mila </option>
+						<option value="Ain-Defla"> Ain-Defla </option>
+						<option value="Naama"> Naama </option>
+						<option value="Ain Temouchent"> Ain Temouchent </option>
+						<option value="Ghardaia"> Ghardaia </option>
+						<option value="Relizan"> Relizan </option>	
+					</select>
+					<input type="text" name="address" placeholder="العنوان*  "  maxlength="80" required />
+					<input type="tel" name="phone" placeholder="رقم الهاتف*  "  maxlength="15" 
+					required /> <br>
+					<input type="email" name="email" placeholder="البريد الألكتروني (اختياري)  "  maxlength="80" />
+					<input type="text" name="field" />
+				</fieldset>
+
+				{% if item is not None%}
+				<div class="frame">Confirm</div>
+				<input type="submit" name="submit" value="تأكيد " />
+				{% endif %}
+
+				
+				<p style="border-top: 1px solid black;"> {{form.errors}}  </p>
+
+				{% for message in messages%}
+	    			<p style="text-align:center;">{{ message }}</p>
+	    		{% endfor %}
+
+			</form>
+
+			<aside>
+				<div class="order_summary">
+	    				<h1>  الطلبية   </h1>
+
+	    				<div class="element">
+	    					<div>
+	    						<img src="{{ item.size.color.main_image_URL }}" alt="product image" />
+	    					</div>
+	    					<div>
+	    						<p>{{item.size}} <br />x{{item.quantity}}</p>
+	    						<p>{{item.total_cost}} DA </p> 
+	    					</div>
+	    				</div>
+
+
+	    				<div>
+	    					<p>
+	    						<span>{{item.total_cost}}</span> DA <br /> <br /> <span id="delivery_cost">{{DELIVERY_COST}}</span> DA 
+	    					</p>
+
+	    					<p>
+	    						الكمية  ({{item.quantity}})  <br /> <br />  التسليم 
+	    					</p>
+
+	    				</div>
+	    				<div class="total">
+	    					<p>TOTAL : <span id="total">{{total_cost}}</span> DA</p>
+	    				</div>
+	    		</div>
+	    			
+			</aside>
+
+		</section>
+	</body>
+</html>

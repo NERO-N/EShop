@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<link rel="icon" type="image/svg" href="{% static 'images/logo.svg' %}" />
+        <title>ClickShop Online Shopping Dz</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=5, viewport-fit=cover" />
+
+       <link rel="stylesheet" type="text/css" href="{% static 'css/order_done_style.css' %}" />
+
+    </head>
+
+    <body>
+
+        <header>
+            <div>
+                <a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="logo ClickShop" /></a>
+            </div>
+        </header>
+
+
+        <section>
+
+        	<div class="page">
+        		<h1>YOUR ORDER HAS BEEN RECEIVED</h1>
+				<h2>Dear <strong>Customer</strong> ;</h2>
+				<p>Thank you for purchasing our product. Your support and trust in us are much appreciated.</p>
+
+
+				<p>Customer :</p>
+				<ul>
+					<li>First Name: {{shipping.first_name}}</li>
+					<li>Last Name: {{shipping.last_name}}</li>
+					<li>wilaya: {{shipping.wilaya}}</li>
+					<li>Delivery Address: {{shipping.address}}</li>
+					<li>Phone: {{shipping.phone}}</li>
+					<li>DELIVERY : <strong>{{DELIVERY_COST}} DA</strong></li>
+				</ul>
+
+
+				<p>Your order summary:</p>
+				<ul>
+					<li> {{item.size}}  <strong> x{{item.quantity}} {{item.total_cost}} DA</strong> </li>
+				</ul>
+
+				<p class="total" >TOTAL : {{total_cost}} DA</p>
+
+				<p>
+					ClickShop. <br />
+					{{shipping.date_created}}
+				</p>
+
+			</div>
+
+		</section>
+
+	</body>
+</html>
+
